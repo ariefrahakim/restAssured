@@ -26,7 +26,7 @@ jobs:
         run: ./gradlew clean test   # Menjalankan Gradle task untuk build dan eksekusi TestNG
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results        # Nama artifact yang disimpan di tab workflow
           path: build/test-results/test # Path hasil test report Gradle (JUnit/TestNG XML)
