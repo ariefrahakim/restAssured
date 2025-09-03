@@ -23,7 +23,13 @@ dependencies {
 }
 
 test {
-    useTestNG() {
-        suites 'src/test/java/runner/testng.xml'   // tell Gradle to use your testng.xml
+    useTestNG {
+        // arahkan ke file testng.xml sesuai lokasi
+        suites 'src/test/java/runner/testng.xml'
+    }
+
+    testLogging {
+        showStandardStreams = true    // tampilkan log test di console
+        events "passed", "skipped", "failed" // tampilkan event penting
     }
 }
