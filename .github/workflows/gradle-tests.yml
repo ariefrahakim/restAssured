@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  Api-Rest-Assured:
     runs-on: ubuntu-latest # Runner yang digunakan adalah Ubuntu versi terbaru
 
     steps:
