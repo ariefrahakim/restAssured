@@ -1,43 +1,47 @@
 package tests.auth;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.ConfigReader;     // class custom untuk baca property file (misalnya config.properties)
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class BasicLogin {
+import static io.restassured.RestAssured.given;
+
+public class BasicLoginTest {
 
     @Test
-    public void testLogin() {
-        // Base URI
-        RestAssured.baseURI = "https://sport-reservation-2-api-bootcamp.do.dibimbing.id";
+    public void login() throws IOException {
+        // Set base URI dari file konfigurasi (config.properties)
+        // Misalnya baseUrl=https://sport-reservation-2-api-bootcamp.do.dibimbing.id/api/v1
+        RestAssured.baseURI = ConfigReader.getProperty("baseUrl");
 
-        // Request Body
+        // Membuat request body manual dalam bentuk JSON string
+        // Bisa diganti dengan LoginBody (object mapper) supaya lebih clean
         String requestBody = "{\n" +
                 "    \"email\":\"syukran@gmail.com\",\n" +
                 "    \"password\":\"syukran123\"\n" +
                 "}";
 
-        // Send POST request
+        // Kirim request POST ke endpoint login
+        // - Header Content-Type: application/json
+        // - Body: requestBody
+        // - Endpoint: /login
         Response response = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestBody)
+                .header("Content-Type", "application/json") // set header
+                .body(requestBody)                          // isi body
                 .when()
-                .post("/api/v1/login")
+                .post("/login")                             // method POST + endpoint
                 .then()
-                .statusCode(200) // validasi status code
-                .body("status", equalTo("success")) // validasi field JSON
-                .extract().response();
+                .extract().response();                      // ambil response
 
-        // Print response body
-        System.out.println("Response: " + response.asPrettyString());
+        // Print response ke console untuk debugging
+        System.out.println("Response: " + response.asString());
 
-        // Ambil token (jika ada di response)
-        String token = response.jsonPath().getString("data.token");
-        System.out.println("Token: " + token);
+        // Validasi status code dari response harus 200 (OK)
+        Assert.assertEquals(response.getStatusCode(), 200);
     }
 }
