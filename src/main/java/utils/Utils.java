@@ -20,4 +20,8 @@ public class Utils {
     public static String getCategoryName() {
         return "category" + getRandomTwoDigit();
     }
+
+    // Generate random number untuk password
+    public int randomNum = new Random().nextInt(99999);
+    String randomPassword = "wrongPass" + randomNum;
 }

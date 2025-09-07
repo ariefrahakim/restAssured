@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.ConfigReader;     // class custom untuk baca property file (misalnya config.properties)
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
@@ -43,5 +42,31 @@ public class BasicLoginTest {
 
         // Validasi status code dari response harus 200 (OK)
         Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    public void loginWithWrongPassword() {
+        RestAssured.baseURI = ConfigReader.getProperty("baseUrl");
+
+        String requestBody = "{\n" +
+                "    \"email\":\"syukran@gmail.com\",\n" +
+                "    \"password\":\"wrongPassword123\"\n" +
+                "}";
+
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .post("/login")
+                .then()
+                .extract().response();
+
+        System.out.println("Negative Case - Wrong Password: " + response.asString());
+
+        // Expect 401 Unauthorized or 400 Bad Request (depends on API implementation)
+        Assert.assertEquals(response.getStatusCode(), 404);
+
+        // Check error message
+        Assert.assertEquals(response.jsonPath().getString("message"), "Unauthorised.");
     }
 }
