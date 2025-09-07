@@ -37,7 +37,7 @@ public class CreateSportCategoryTest {
     public void createSportCategory() throws IOException {
         // Buat body dari class
         CreateSportCategoryWithParamBody bodyObj = new CreateSportCategoryWithParamBody();
-        JSONObject requestBody = bodyObj.getBodyCreateCategoryWithParam("test123");
+        JSONObject requestBody = bodyObj.getBodyCreateCategoryWithParam(Utils.getCategoryName());
 
         // Kirim request POST
         Response response = given()
@@ -75,7 +75,7 @@ public class CreateSportCategoryTest {
     }
 
     @Test
-    public void createSportCategoryInvalidTitle() throws IOException {
+    public void createSportCategoryInvalidName() throws IOException {
         // Buat body dari class
         CreateSportCategoryWithParamBody bodyObj = new CreateSportCategoryWithParamBody();
         JSONObject requestBody = bodyObj.getBodyCreateCategoryWithParam("");

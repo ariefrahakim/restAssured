@@ -18,7 +18,7 @@ public class Utils {
 
     // Generate dynamic category name
     public static String getCategoryName() {
-        return "category" + getRandomTwoDigit();
+        return "category " + getRandomTwoDigit();
     }
 
     // Generate random number untuk password
