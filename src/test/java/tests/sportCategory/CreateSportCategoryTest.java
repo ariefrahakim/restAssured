@@ -1,7 +1,7 @@
-package tests.sportActivity;
+package tests.sportCategory;
 
-import body.sportActivity.CreateSportActivityBody;
 import body.sportActivity.CreateSportActivityWithParamBody;
+import body.sportCategory.CreateSportCategoryWithParamBody;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.JSONObject;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateSportActivityTest {
+public class CreateSportCategoryTest {
 
     private String token;
 
@@ -34,10 +34,10 @@ public class CreateSportActivityTest {
     }
 
     @Test
-    public void createSportActivity() throws IOException {
+    public void createSportCategory() throws IOException {
         // Buat body dari class
-        CreateSportActivityWithParamBody bodyObj = new CreateSportActivityWithParamBody();
-        JSONObject requestBody = bodyObj.getBodyCreateWithParam(Utils.generateRandomTitle());
+        CreateSportCategoryWithParamBody bodyObj = new CreateSportCategoryWithParamBody();
+        JSONObject requestBody = bodyObj.getBodyCreateCategoryWithParam(Utils.getCategoryName());
 
         // Kirim request POST
         Response response = given()
@@ -46,7 +46,7 @@ public class CreateSportActivityTest {
                 .header("Accept", "application/json")
                 .body(requestBody.toString())
                 .when()
-                .post("/sport-activities/create")
+                .post("sport-categories/create")
                 .then()
                 .extract().response();
 
@@ -61,24 +61,24 @@ public class CreateSportActivityTest {
         // Validasi message
         Assert.assertEquals(response.jsonPath().getString("message"), "data saved");
 
-        // Save activity id
-        String activity_id = response.jsonPath().getString("result.id");
-        System.out.println("Activity ID: " + activity_id);
+        // Save category id
+        String category_id = response.jsonPath().getString("result.id");
+        System.out.println("Category ID: " + category_id);
 
         JSONObject tokenJson = new JSONObject();
-        tokenJson.put("activity_id", activity_id);
+        tokenJson.put("category_id", category_id);
 
-        try (FileWriter file = new FileWriter("src/resources/json/activity_id.json")) {
+        try (FileWriter file = new FileWriter("src/resources/json/category_id.json")) {
             file.write(tokenJson.toString(4)); // 4 = indentation
             file.flush();
         }
     }
 
     @Test
-    public void createSportActivityInvalidTitle() throws IOException {
+    public void createSportCategoryInvalidName() throws IOException {
         // Buat body dari class
-        CreateSportActivityWithParamBody bodyObj = new CreateSportActivityWithParamBody();
-        JSONObject requestBody = bodyObj.getBodyCreateWithParam("");
+        CreateSportCategoryWithParamBody bodyObj = new CreateSportCategoryWithParamBody();
+        JSONObject requestBody = bodyObj.getBodyCreateCategoryWithParam("");
 
         // Kirim request POST
         Response response = given()
@@ -87,7 +87,7 @@ public class CreateSportActivityTest {
                 .header("Accept", "application/json")
                 .body(requestBody.toString())
                 .when()
-                .post("/sport-activities/create")
+                .post("/sport-categories/create")
                 .then()
                 .extract().response();
 
@@ -97,6 +97,6 @@ public class CreateSportActivityTest {
         Assert.assertEquals(response.getStatusCode(), 406);
 
         // Validasi message
-        Assert.assertEquals(response.jsonPath().getString("message"), "The title field is required.");
+        Assert.assertEquals(response.jsonPath().getString("message"), "The name field is required.");
     }
 }

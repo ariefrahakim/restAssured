@@ -16,7 +16,7 @@ import static io.restassured.RestAssured.given;
 public class LoginTest {
 
     @Test
-    public void login() throws IOException {
+    public void Login() throws IOException {
         // Set base URI dari ConfigReader
         RestAssured.baseURI = ConfigReader.getProperty("baseUrl");
 

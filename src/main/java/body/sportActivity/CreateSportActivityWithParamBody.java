@@ -3,13 +3,13 @@ package body.sportActivity;
 import org.json.JSONObject;
 import utils.Utils;
 
-public class CreateSportActivityBody {
+public class CreateSportActivityWithParamBody {
 
-    public JSONObject getBody() {
+    public JSONObject getBodyCreateWithParam(String title) {
         JSONObject body = new JSONObject();
         body.put("sport_category_id", "79");
         body.put("city_id", 3172);
-        body.put("title", Utils.getCategoryName());
+        body.put("title", title);
         body.put("description", "*MF TANGSEL x MF DEPOK x MF BOGOR*");
         body.put("slot", 9);
         body.put("price", 70000);
