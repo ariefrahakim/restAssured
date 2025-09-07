@@ -1,54 +1,59 @@
-name: API Tests (Gradle)   # Nama workflow yang akan tampil di tab Actions
+name: API Tests (Gradle)   # Nama workflow yang tampil di tab Actions GitHub
 
 on:
-  workflow_dispatch:       # Bisa dijalankan manual via GitHub Actions UI
-  push:                    # Akan otomatis jalan kalau ada commit/push ke branch main
+  workflow_dispatch:       # Bisa dijalankan manual lewat GitHub Actions UI
+  push:                    # Otomatis jalan kalau ada commit/push ke branch main
     branches: [ "main" ]
-  pull_request:            # Akan otomatis jalan kalau ada Pull Request (PR) ke branch main
+  pull_request:            # Otomatis jalan kalau ada Pull Request (PR) ke branch main
     branches: [ "main" ]
 
 jobs:
   Api-Rest-Assured:
-    runs-on: ubuntu-latest # Mesin/runner Ubuntu terbaru yang disediakan GitHub
+    runs-on: ubuntu-latest # Runner GitHub (mesin virtual) pakai Ubuntu versi terbaru
 
     steps:
-      # 1. Ambil source code dari repository GitHub agar bisa dipakai
+      # 1️⃣ Checkout source code dari repository GitHub
+      #    Tanpa ini, file project tidak tersedia di runner.
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Java Development Kit (JDK) versi 17
-      #    Karena project Gradle + RestAssured ini butuh JDK 17
+      # 2️⃣ Setup Java Development Kit (JDK) versi 17
+      #    Karena project Gradle + RestAssured + TestNG butuh JDK untuk compile & run test.
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: temurin     # Distribusi JDK (Temurin open-source)
-          java-version: 17          # Versi Java yang digunakan
+          distribution: temurin     # Distribusi JDK open-source yang umum dipakai
+          java-version: 17          # Versi Java sesuai konfigurasi build.gradle
 
-      # 3. Beri permission agar file gradlew bisa dijalankan di Linux (Ubuntu)
+      # 3️⃣ Ubah file gradlew jadi executable
+      #    Default di Linux, file gradlew belum punya izin execute.
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
-      # 4. Jalankan perintah Gradle: clean project lalu jalankan semua test
-      #    Di tahap ini semua API test RestAssured/TestNG dieksekusi
+      # 4️⃣ Jalankan perintah Gradle: clean project lalu jalankan semua test
+      #    - "clean" hapus build lama
+      #    - "test" jalankan semua test API (RestAssured + TestNG)
       - name: Run Tests with Gradle
         run: ./gradlew clean test
 
-      # 5. Upload hasil test dalam format XML (JUnit/TestNG) agar bisa didownload dari GitHub Actions
+      # 5️⃣ Upload hasil test dalam format XML (JUnit/TestNG)
+      #    Cocok untuk analisis lanjutan / integrasi tools lain.
       - name: Upload Test Results (XML)
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: build/test-results/test
 
-      # 6. Upload hasil test dalam format HTML (lebih mudah dibaca untuk non-teknis)
+      # 6️⃣ Upload hasil test dalam format HTML
+      #    Lebih ramah untuk dibaca non-teknis, bisa download & buka di browser.
       - name: Upload HTML Test Report
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: build/reports/tests/test
 
-      # 7. Tambahkan summary ringkas di tab GitHub Actions → Summary
-      #    Ini untuk memudahkan tim melihat status build tanpa buka log panjang
+      # 7️⃣ Tambahkan ringkasan hasil build & test di tab Summary
+      #    Supaya tim langsung lihat status tanpa scroll log panjang.
       - name: Add Build Summary
         run: |
           echo "## ✅ Build & Test Summary" >> $GITHUB_STEP_SUMMARY
