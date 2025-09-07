@@ -1,6 +1,7 @@
 package tests.sportActivity;
 
 import body.sportActivity.CreateSportActivityBody;
+import body.sportActivity.CreateSportActivityWithParamBody;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utils.ConfigReader;
+import utils.Utils;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,8 +36,8 @@ public class CreateSportActivityTest {
     @Test
     public void createSportActivity() throws IOException {
         // Buat body dari class
-        CreateSportActivityBody bodyObj = new CreateSportActivityBody();
-        JSONObject requestBody = bodyObj.getBody();
+        CreateSportActivityWithParamBody bodyObj = new CreateSportActivityWithParamBody();
+        JSONObject requestBody = bodyObj.getBodyCreateWithParam(Utils.generateRandomTitle());
 
         // Kirim request POST
         Response response = given()
@@ -70,5 +72,31 @@ public class CreateSportActivityTest {
             file.write(tokenJson.toString(4)); // 4 = indentation
             file.flush();
         }
+    }
+
+    @Test
+    public void createSportActivityInvalidTitle() throws IOException {
+        // Buat body dari class
+        CreateSportActivityWithParamBody bodyObj = new CreateSportActivityWithParamBody();
+        JSONObject requestBody = bodyObj.getBodyCreateWithParam("");
+
+        // Kirim request POST
+        Response response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .body(requestBody.toString())
+                .when()
+                .post("/sport-activities/create")
+                .then()
+                .extract().response();
+
+        System.out.println("Response: " + response.asString());
+
+        // Validasi status code
+        Assert.assertEquals(response.getStatusCode(), 406);
+
+        // Validasi message
+        Assert.assertEquals(response.jsonPath().getString("message"), "The title field is required.");
     }
 }

@@ -9,4 +9,10 @@
             <class name="tests.sportActivity.DeleteSportActivityByIdTest"/>
         </classes>
     </test>
+    <test name="Sport Categories Tests">
+        <classes>
+            <class name="tests.auth.LoginTest"/>
+            <class name="tests.sportCategory.GetSportCategoriesTest"/>
+        </classes>
+    </test>
 </suite>
