@@ -1,27 +1,44 @@
 package utils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-import java.util.Random;
 
 public class Utils {
 
-    // Generate random title
+    // Generate random title tanpa prefix
     public static String generateRandomTitle() {
         // Ambil 8 karakter pertama dari UUID
         return "Title-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
-    // Generate random two-digit number
-    public static int getRandomTwoDigit() {
-        return new Random().nextInt(90) + 10;  // 10–99
+    public static String getDateAfterSevenDays() {
+
+        // Get today's date
+        LocalDate currentDate = LocalDate.now();
+
+        // Add 7 days to today's date
+        LocalDate dateAfter7Days = currentDate.plusDays(7);
+
+        // Define the output format (yyyy-MM-dd)
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convert the date to a String with the chosen format
+        return dateAfter7Days.format(dateFormatter);
     }
 
-    // Generate dynamic category name
-    public static String getCategoryName() {
-        return "category " + getRandomTwoDigit();
-    }
+    public static String getDateAfterFourDays() {
 
-    // Generate random number untuk password
-    public int randomNum = new Random().nextInt(99999);
-    String randomPassword = "wrongPass" + randomNum;
+        // Get today's date
+        LocalDate currentDate = LocalDate.now();
+
+        // Add 7 days to today's date
+        LocalDate dateAfter7Days = currentDate.plusDays(4);
+
+        // Define the output format (yyyy-MM-dd)
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convert the date to a String with the chosen format
+        return dateAfter7Days.format(dateFormatter);
+    }
 }
