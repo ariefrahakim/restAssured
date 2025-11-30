@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results        # Nama file/artifact yang akan muncul di tab workflow GitHub
-          path: build/test-results/test # Path folder hasil test report yang dibuat Gradle
+          path: build/reports/tests # Path folder hasil test report yang dibuat Gradle
