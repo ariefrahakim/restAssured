@@ -1,34 +1,34 @@
 package tests.auth;
 
-import body.auth.LoginBody;
-import io.restassured.RestAssured;
+import base.BaseTest;
+import body.auth.LoginResonanceBody;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import utils.ConfigReader;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-public class LoginTest {
+public class LoginResonanceTest extends BaseTest {
+
+    public LoginResonanceTest() {
+        env = "resonance";
+    }
 
     @Test
     public void Login() throws IOException {
-        // Set base URI dari ConfigReader
-        RestAssured.baseURI = ConfigReader.getProperty("baseUrlSport");
-
         // Buat body login
-        LoginBody loginBody = new LoginBody();
+        LoginResonanceBody loginBody = new LoginResonanceBody();
 
         // Kirim request POST ke endpoint login
         Response response = given()
                 .header("Content-Type", "application/json")
                 .body(loginBody.loginData().toString())
                 .when()
-                .post("/login") // endpoint
+                .post("/api/rest/login") // endpoint resonance
                 .then()
                 .extract().response();
 
@@ -39,24 +39,24 @@ public class LoginTest {
         Assert.assertEquals(response.getStatusCode(), 200);
 
         // Validasi token
-        String token = response.jsonPath().getString("data.token");
+        String token = response.jsonPath().getString("token");
         Assert.assertNotNull(token, "Token should not be null");
         Assert.assertFalse(token.isEmpty(), "Token should not be empty");
         System.out.println("Token: " + token);
 
         // Validasi message
-        String message = response.jsonPath().getString("message");
-        Assert.assertEquals(message, "User login successfully.", "Message does not match");
+        String message = response.jsonPath().getString("ok");
+        Assert.assertEquals(message, "true", "Message does not match");
 
         // Simpan token ke file resources/json/token.json
         JSONObject tokenJson = new JSONObject();
         tokenJson.put("token", token);
 
-        try (FileWriter file = new FileWriter("src/resources/json/token.json")) {
+        try (FileWriter file = new FileWriter("src/resources/json/tokenResonance.json")) {
             file.write(tokenJson.toString(4)); // 4 = indentation
             file.flush();
         }
 
-        System.out.println("Token berhasil disimpan di resources/json/token.json");
+        System.out.println("Token berhasil disimpan di resources/json/tokenResonance.json");
     }
 }
