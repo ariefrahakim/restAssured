@@ -1,6 +1,8 @@
 name: API Tests (Gradle)   # Nama workflow yang akan tampil di tab Actions
 
 on:
+  schedule:
+    - cron: '0 23 * * *'  # Format: menit jam hari-bulan bulan hari-minggu | 0 11 * * * = jam 11:00 pagi UTC setiap hari
   workflow_dispatch:       # Workflow bisa dijalankan manual via GitHub Actions UI
   push:                    # Workflow otomatis jalan ketika ada commit/push ke branch main
     branches: [ "main" ]

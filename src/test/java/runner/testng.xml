@@ -1,21 +1,36 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="API Test Suite" verbose="1" parallel="false">
+
+    <test name="Resonance Auth Tests">
+        <classes>
+            <class name="tests.auth.RegistrationResonanceTest"/>
+            <class name="tests.auth.LoginResonanceTest"/>
+        </classes>
+    </test>
+
+    <test name="Sport Auth Tests">
+        <classes>
+            <class name="tests.auth.RegisterSportTest"/>
+            <class name="tests.auth.LoginTest"/>
+        </classes>
+    </test>
+
     <test name="Sport Activity Tests">
         <classes>
-            <class name="tests.auth.LoginTest"/>
             <class name="tests.sportActivity.CreateSportActivityTest"/>
             <class name="tests.sportActivity.GetSportActivityByIdTest"/>
             <class name="tests.sportActivity.UpdateSportActivityTest"/>
             <class name="tests.sportActivity.DeleteSportActivityByIdTest"/>
         </classes>
     </test>
-<!--    <test name="Sport Categories Tests">-->
-<!--        <classes>-->
-<!--            <class name="tests.auth.LoginTest"/>-->
-<!--            <class name="tests.sportCategory.GetSportCategoriesTest"/>-->
-<!--            <class name="tests.sportCategory.CreateSportCategoryTest"/>-->
-<!--            <class name="tests.sportCategory.UpdateSportCategoryTest"/>-->
-<!--            <class name="tests.sportCategory.DeleteSportCategoryByIdTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+
+    <test name="Sport Category Tests">
+        <classes>
+            <class name="tests.sportCategory.GetSportCategoriesTest"/>
+            <class name="tests.sportCategory.CreateSportCategoryTest"/>
+            <class name="tests.sportCategory.UpdateSportCategoryTest"/>
+            <class name="tests.sportCategory.DeleteSportCategoryByIdTest"/>
+        </classes>
+    </test>
+
 </suite>
