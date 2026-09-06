@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 public class RegisterSportTest extends BaseTest {
 
     public RegisterSportTest() {
-        env = "sport";
+        super("sport");
     }
 
     @Test

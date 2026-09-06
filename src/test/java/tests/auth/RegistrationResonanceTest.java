@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 public class RegistrationResonanceTest extends BaseTest {
 
     public RegistrationResonanceTest() {
-        env = "resonance";
+        super("resonance");
     }
 
     @Test
