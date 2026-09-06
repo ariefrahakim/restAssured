@@ -4,7 +4,7 @@
     <test name="Resonance Auth Tests">
         <classes>
             <class name="tests.auth.RegistrationResonanceTest"/>
-<!--            <class name="tests.auth.LoginResonanceTest"/>-->
+            <class name="tests.auth.LoginResonanceTest"/>
         </classes>
     </test>
 
@@ -15,22 +15,22 @@
         </classes>
     </test>
 
-<!--    <test name="Sport Activity Tests">-->
-<!--        <classes>-->
-<!--            <class name="tests.sportActivity.CreateSportActivityTest"/>-->
-<!--            <class name="tests.sportActivity.GetSportActivityByIdTest"/>-->
-<!--            <class name="tests.sportActivity.UpdateSportActivityTest"/>-->
-<!--            <class name="tests.sportActivity.DeleteSportActivityByIdTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Sport Activity Tests">
+        <classes>
+            <class name="tests.sportActivity.CreateSportActivityTest"/>
+            <class name="tests.sportActivity.GetSportActivityByIdTest"/>
+            <class name="tests.sportActivity.UpdateSportActivityTest"/>
+            <class name="tests.sportActivity.DeleteSportActivityByIdTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Sport Category Tests">-->
-<!--        <classes>-->
-<!--            <class name="tests.sportCategory.GetSportCategoriesTest"/>-->
-<!--            <class name="tests.sportCategory.CreateSportCategoryTest"/>-->
-<!--            <class name="tests.sportCategory.UpdateSportCategoryTest"/>-->
-<!--            <class name="tests.sportCategory.DeleteSportCategoryByIdTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Sport Category Tests">
+        <classes>
+            <class name="tests.sportCategory.GetSportCategoriesTest"/>
+            <class name="tests.sportCategory.CreateSportCategoryTest"/>
+            <class name="tests.sportCategory.UpdateSportCategoryTest"/>
+            <class name="tests.sportCategory.DeleteSportCategoryByIdTest"/>
+        </classes>
+    </test>
 
 </suite>
