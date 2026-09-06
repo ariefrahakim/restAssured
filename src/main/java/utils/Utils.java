@@ -6,6 +6,14 @@ import java.util.UUID;
 
 public class Utils {
 
+    public static String generateRandomPhoneNumber() {
+        return "08" + (long) (Math.random() * 1000000000L);
+    }
+
+    public static String generateRandomEmail() {
+        return "user" + UUID.randomUUID().toString().substring(0, 8) + "@example.com";
+    }
+
     // Generate random title tanpa prefix
     public static String generateRandomTitle() {
         // Ambil 8 karakter pertama dari UUID
